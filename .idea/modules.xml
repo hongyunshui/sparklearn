@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/spark-study/spark-study.iml" filepath="$PROJECT_DIR$/spark-study/spark-study.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sparklearn_parent/sparklearn_parent.iml" filepath="$PROJECT_DIR$/sparklearn_parent/sparklearn_parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test5/test5.iml" filepath="$PROJECT_DIR$/test5/test5.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,557 @@
+a b ad 
+a b c  a
+#rpm -Uvh binutils-2.*
+#rpm -Uvh compat-libstdc++-33*
+#rpm -Uvh elfutils-libelf-0.*
+#rpm -Uvh libaio-0.*
+rpm -Uvh libaio-devel-0.*
+#rpm -Uvh sysstat-9.*
+#rpm -Uvh glibc-2.*
+#rpm -Uvh glibc-common-2.*
+
+#rpm -Uvh glibc-devel-2.* glibc-headers-2.*
+rpm -Uvh ksh-2*
+#rpm -Uvh make-3.*
+#rpm -Uvh libgcc-4.*
+#rpm -Uvh libstdc++-4.*
+rpm -Uvh libstdc++-4.*.i686*
+#rpm -Uvh libstdc++-devel-4.*
+#rpm -Uvh gcc-4.*x86_64*
+#rpm -Uvh gcc-c++-4.*x86_64*
+#rpm -Uvh --allfiles elfutils-libelf-0*x86_64* elfutils-libelf-devel-0*x86_64*
+rpm -Uvh elfutils-libelf-0*i686* elfutils-libelf-devel-0*i686*
+rpm -Uvh libtool-ltdl*i686*
+rpm -Uvh ncurses*i686*
+rpm -Uvh readline*i686*
+rpm -Uvh unixODBC*# 绑定IP
+setup network ssh-bind userName@IP
+
+# 解绑IP
+setup network ssh-unbind root@192.168.1.251
+
+# 查看已绑定的IP
+setup network ssh-binding
+setup network ssh-bind show
+
+# 创建auto-sync实例，并根据提示选择参数
+setup auto-sync create 
+# setup auto-sync:instanceName run
+
+# 编号为newDiskNumber的磁盘替换掉volumeNumber中编号为badDiskNumber的磁盘（前提是此磁盘为cannot状态）
+zpool replace volumeName badDiskNumber newDiskNumber
+
+# 把volumeName中编号为diskNumber的磁盘剔除、然后就可以拔掉该磁盘
+zpool detach volumeName diskNumber
+
+# 把磁盘从volume中移除、然后可以添加到另一个volume
+zpool remove volumeName diskNumber
+
+# 查看所有volume状态
+zpool staus volumeName
+
+# 创建auto-sync任务
+setup auto-sync
+
+# 执行创建的auto-sync任务
+setup auto-sync :pool01test-000
+
+svcs -v nm{s,v,cd} nbs nmdtrace dbus
+
+svcadm -v disable -t nm{s,v,cd} nmdtrace nbs rmovlmgr dbus
+
+svcs nm{s,v} nmcd nbs nmdtrace dbus rmvolmgr
+
+svcadm -v enable dbus rmvolmgr nbs nm{s,v,cd} nmdtrace
+
+setup appliance nms property sys_zfs_resilver_delay -p 0 -y
+show appliance nms property sys_zfs_resilver_delay 
+
+setup appliance nms property sys_zfs_resilver_min_time -p 5000 -y
+show appliance nms property sys_zfs_resilver_min_time
+
+
+##nmc进入特权模式
+!bash
+
+##特权模式下执行一下命令添加缓存盘
+zpool add volumeName cache diskNumber 
+
+
+##特权模式下执行一下命令添加日志盘
+zpool add volumeName log diskNumber
+
+##特权模式下查看所有的卷
+stmfadm list-lu
+
+
+
+百度首页 jianhong513 消息 商城 网页 新闻 贴吧 知道 音乐 图片 视频 地图 文库 百科
+  
+
+归一化
+进入词条全站搜索帮助
+首页
+历史上的今天
+百科冷知识
+图解百科
+分类
+艺术科学自然文化地理生活社会人物经济体育历史
+秒懂百科
+秒懂少儿APP
+秒懂星课堂
+秒懂大师说
+秒懂看瓦特
+秒懂五千年
+秒懂全视界
+特色百科
+数字博物馆
+非遗百科
+百度数说
+城市百科
+恐龙百科
+多肉百科
+用户
+蝌蚪团
+燃梦计划
+百科任务
+百科商城
+权威合作
+合作模式
+常见问题
+联系方式
+个人中心
+归一化是一个多义词，请在下列义项上选择浏览（共2个义项）添加义项
+▪数学▪OpenCV归一化函数
+收藏 516
+31
+归一化 （数学） 编辑
+本词条由“科普中国”百科科学词条编写与应用工作项目 审核 。
+归一化是一种简化计算的方式，即将有量纲的表达式，经过变换，化为无量纲的表达式，成为标量。 在多种计算中都经常用到这种方法。
+中文名 归一化 外文名 normalization 定    义 简化计算的方式 性    质 标量 研究领域 物理学 归一条件 粒子量子态的波函数满足归一条件
+目录
+1 简单介绍
+▪ 归一条件
+▪ 归一化导引
+2 应用
+3 薛定谔方程的归一化
+4 图像处理中的归一化
+▪ 原因
+▪ 处理步骤
+简单介绍编辑
+归一化是一种无量纲处理手段，使物理系统数值的绝对值变成某种相对值关系。简化计算，缩小量值的有效办法。 [1]  例如，滤波器中各个频率值以截止频率作归一化后，频率都是截止频率的相对值，没有了量纲。阻抗以电源内阻作归一化后，各个阻抗都成了一种相对阻抗值，“欧姆”这个量纲也没有了。等各种运算都结束后，反归一化一切都复原了。信号处理工具箱中经常使用的是nyquist频率，它被定义为采样频率的二分之一，在滤波器的阶数选择和设计中的截止频率均使用nyquist频率进行归一化处理。例如对于一个采样频率为500hz的系统，400hz的归一化频率就为400/500=0.8，归一化频率范围在[0,1]之间。如果将归一化频率转换为角频率，则将归一化频率乘以2*pi，如果将归一化频率转换为hz，则将归一化频率乘以采样频率的一半。
+归一条件
+在量子力学里，表达粒子的量子态的波函数必须满足归一条件，也就是说，在空间内找到粒子的概率必须等于1。这性质称为归一性。
+归一化导引
+一般而言，波函数是一个复函数。可是，概率密度是一个实函数，空间内积分和为1，称为概率密度函数。所以在区域内，找到粒子的概率是1。
+因为粒子存在于空间，因此在空间内找到粒子概率是1，所以积分于整个空间将得到1。
+假若，从解析薛定谔方程而得到的波函数，其概率是有限的，但不等于1，则可以将波函数乘以一个常数，使概率等于1。或者假若波函数内，已经有一个任意常数，可以设定这任意常数的值，使概率等于1。 [2] 
+应用编辑
+1.复数阻抗可以归一化写为：Z = R + jωL = R(1 + jωL/R)（复数部分变成了纯数了，没有任何量纲）。
+2.微波之中也就是电路分析、信号系统、电磁波传输等，有很多运算都可以如此处理，既保证了运算的便捷，又能凸现出物理量的本质含义。
+3.在统计学中，归一化的具体作用是归纳统一样本的统计分布性。归一化在0-1之间是统计的概率分布，归一化在-1--+1之间是统计的坐标分布。即该函数在(-∞,+∞)的积分为1。
+薛定谔方程的归一化编辑
+薛定谔方程为
+
+其中，H是表征波函数总能量的哈密顿算符，  是物理系统的波函数，i是虚数。h是约化普朗克常数。
+将波函数归一化为。则薛定谔方程成为
+
+对于归一化，薛定谔方程是个不变式，因为薛定谔方程是个线性微分方程。
+一个表达粒子量子态的波函数，必须满足粒子的薛定谔方程。既然和都能够满足同样的薛定谔方程，它们必定都表达同样的量子态。假若不使用归一化的波函数，则只能知道概率的相对大小；否则，使用归一化的波函数，可以知道绝对的概率。这对于量子问题的解析，会提供许多便利。
+图像处理中的归一化编辑
+原因
+图像中，若比较两张图片（两张图片的样式：通道数，数据格式相同、大小：分辨率可以不同）
+1.比较两张图片大小，需要判断是否相同的时候；
+2.求取较小的一张图片在大图中的位置，需要判断的时候。
+这个时候，我们可以使用欧式距离来作为判断函数，如下：
+
+（基础就是二维中的两点的距离：  ）
+若D=0，说明图片相等；或者是小的一张图片已经找到在大图中的位置。但是上面的D值的取值范围太广，甚至可以达到（0，正无穷大），会超出计算机的计算范围。故使用归一化处理。
+处理步骤
+将这个相似性函数展开，可以得：
+
+2.可以看出，只有第二项是有意义的，因为第一项和第三项的值在选定模板后是固定的。对于欧式距离相似函数，值越大表示越不相似，也就是说，第二项的值越小则越不相似。
+将第二项进行归一化：
+ 
+那么当R（i，j）为1时，表示模板与子图完全相等。
+参考资料
+1.  叶海民, 戎蒙恬, 邓晓东,等. 基于绝对值差的归一化波形匹配混合算法[J]. 信息技术, 2011(8):89-93.
+2.  李前树, 隗功民, 吕立强. TF量子相空间量子力学与准概率密度函数及坐标(动量)表象量子力学之间的关系[C]// 中国化学会全国量子化学学术会议. 2005.
+词条标签：
+科学百科数理科学分类 ， 科学 ， 学科
+ 
+归一化图册
+科普中国
+致力于权威的科学传播
+
+本词条认证专家为
+孙和军副教授审核
+南京理工大学
+
+V百科往期回顾
+ 
+ 
+权威合作编辑
+权威编辑
+“科普中国”百科科学词条编写与应用工作项目
+
+“科普中国”是为我国科普信息化建设塑造的全...
+什么是权威编辑 查看编辑版本
+词条统计
+浏览次数：587083次
+编辑次数：49次历史版本
+最近更新：w_ou（2018-07-03）
+新手上路
+成长任务编辑入门编辑规则本人编辑new
+我有疑问
+我要质疑在线客服参加讨论意见反馈
+投诉建议
+举报不良信息未通过词条申诉投诉侵权信息封禁查询与解封
+©2018 Baidu 使用百度前必读 | 百科协议 | 隐私政策 | 百度百科合作平台 | 京ICP证030173号 
+京公网安备11000002000001号
+
+分享
+
+
+
+百度首页 jianhong513 消息 商城 网页 新闻 贴吧 知道 音乐 图片 视频 地图 文库 百科
+  
+
+归一化
+进入词条全站搜索帮助
+首页
+历史上的今天
+百科冷知识
+图解百科
+分类
+艺术科学自然文化地理生活社会人物经济体育历史
+秒懂百科
+秒懂少儿APP
+秒懂星课堂
+秒懂大师说
+秒懂看瓦特
+秒懂五千年
+秒懂全视界
+特色百科
+数字博物馆
+非遗百科
+百度数说
+城市百科
+恐龙百科
+多肉百科
+用户
+蝌蚪团
+燃梦计划
+百科任务
+百科商城
+权威合作
+合作模式
+常见问题
+联系方式
+个人中心
+归一化是一个多义词，请在下列义项上选择浏览（共2个义项）添加义项
+▪数学▪OpenCV归一化函数
+收藏 516
+31
+归一化 （数学） 编辑
+本词条由“科普中国”百科科学词条编写与应用工作项目 审核 。
+归一化是一种简化计算的方式，即将有量纲的表达式，经过变换，化为无量纲的表达式，成为标量。 在多种计算中都经常用到这种方法。
+中文名 归一化 外文名 normalization 定    义 简化计算的方式 性    质 标量 研究领域 物理学 归一条件 粒子量子态的波函数满足归一条件
+目录
+1 简单介绍
+▪ 归一条件
+▪ 归一化导引
+2 应用
+3 薛定谔方程的归一化
+4 图像处理中的归一化
+▪ 原因
+▪ 处理步骤
+简单介绍编辑
+归一化是一种无量纲处理手段，使物理系统数值的绝对值变成某种相对值关系。简化计算，缩小量值的有效办法。 [1]  例如，滤波器中各个频率值以截止频率作归一化后，频率都是截止频率的相对值，没有了量纲。阻抗以电源内阻作归一化后，各个阻抗都成了一种相对阻抗值，“欧姆”这个量纲也没有了。等各种运算都结束后，反归一化一切都复原了。信号处理工具箱中经常使用的是nyquist频率，它被定义为采样频率的二分之一，在滤波器的阶数选择和设计中的截止频率均使用nyquist频率进行归一化处理。例如对于一个采样频率为500hz的系统，400hz的归一化频率就为400/500=0.8，归一化频率范围在[0,1]之间。如果将归一化频率转换为角频率，则将归一化频率乘以2*pi，如果将归一化频率转换为hz，则将归一化频率乘以采样频率的一半。
+归一条件
+在量子力学里，表达粒子的量子态的波函数必须满足归一条件，也就是说，在空间内找到粒子的概率必须等于1。这性质称为归一性。
+归一化导引
+一般而言，波函数是一个复函数。可是，概率密度是一个实函数，空间内积分和为1，称为概率密度函数。所以在区域内，找到粒子的概率是1。
+因为粒子存在于空间，因此在空间内找到粒子概率是1，所以积分于整个空间将得到1。
+假若，从解析薛定谔方程而得到的波函数，其概率是有限的，但不等于1，则可以将波函数乘以一个常数，使概率等于1。或者假若波函数内，已经有一个任意常数，可以设定这任意常数的值，使概率等于1。 [2] 
+应用编辑
+1.复数阻抗可以归一化写为：Z = R + jωL = R(1 + jωL/R)（复数部分变成了纯数了，没有任何量纲）。
+2.微波之中也就是电路分析、信号系统、电磁波传输等，有很多运算都可以如此处理，既保证了运算的便捷，又能凸现出物理量的本质含义。
+3.在统计学中，归一化的具体作用是归纳统一样本的统计分布性。归一化在0-1之间是统计的概率分布，归一化在-1--+1之间是统计的坐标分布。即该函数在(-∞,+∞)的积分为1。
+薛定谔方程的归一化编辑
+薛定谔方程为
+
+其中，H是表征波函数总能量的哈密顿算符，  是物理系统的波函数，i是虚数。h是约化普朗克常数。
+将波函数归一化为。则薛定谔方程成为
+
+对于归一化，薛定谔方程是个不变式，因为薛定谔方程是个线性微分方程。
+一个表达粒子量子态的波函数，必须满足粒子的薛定谔方程。既然和都能够满足同样的薛定谔方程，它们必定都表达同样的量子态。假若不使用归一化的波函数，则只能知道概率的相对大小；否则，使用归一化的波函数，可以知道绝对的概率。这对于量子问题的解析，会提供许多便利。
+图像处理中的归一化编辑
+原因
+图像中，若比较两张图片（两张图片的样式：通道数，数据格式相同、大小：分辨率可以不同）
+1.比较两张图片大小，需要判断是否相同的时候；
+2.求取较小的一张图片在大图中的位置，需要判断的时候。
+这个时候，我们可以使用欧式距离来作为判断函数，如下：
+
+（基础就是二维中的两点的距离：  ）
+若D=0，说明图片相等；或者是小的一张图片已经找到在大图中的位置。但是上面的D值的取值范围太广，甚至可以达到（0，正无穷大），会超出计算机的计算范围。故使用归一化处理。
+处理步骤
+将这个相似性函数展开，可以得：
+
+2.可以看出，只有第二项是有意义的，因为第一项和第三项的值在选定模板后是固定的。对于欧式距离相似函数，值越大表示越不相似，也就是说，第二项的值越小则越不相似。
+将第二项进行归一化：
+ 
+那么当R（i，j）为1时，表示模板与子图完全相等。
+参考资料
+1.  叶海民, 戎蒙恬, 邓晓东,等. 基于绝对值差的归一化波形匹配混合算法[J]. 信息技术, 2011(8):89-93.
+2.  李前树, 隗功民, 吕立强. TF量子相空间量子力学与准概率密度函数及坐标(动量)表象量子力学之间的关系[C]// 中国化学会全国量子化学学术会议. 2005.
+词条标签：
+科学百科数理科学分类 ， 科学 ， 学科
+ 
+归一化图册
+科普中国
+致力于权威的科学传播
+
+本词条认证专家为
+孙和军副教授审核
+南京理工大学
+
+V百科往期回顾
+ 
+ 
+权威合作编辑
+权威编辑
+“科普中国”百科科学词条编写与应用工作项目
+
+“科普中国”是为我国科普信息化建设塑造的全...
+什么是权威编辑 查看编辑版本
+词条统计
+浏览次数：587083次
+编辑次数：49次历史版本
+最近更新：w_ou（2018-07-03）
+新手上路
+成长任务编辑入门编辑规则本人编辑new
+我有疑问
+我要质疑在线客服参加讨论意见反馈
+投诉建议
+举报不良信息未通过词条申诉投诉侵权信息封禁查询与解封
+©2018 Baidu 使用百度前必读 | 百科协议 | 隐私政策 | 百度百科合作平台 | 京ICP证030173号 
+京公网安备11000002000001号
+
+分享
+
+
+
+
+
+《Confucian Analects》《論語》（英文版）中國文化核心經典　經部四書類
+
+論　語
+Confucian Analects
+James Legge ,1893
+
+ 
+學而第一
+Book I: Hsio R
+ 
+
+Chapter 1
+
+　　子曰：“學而時習之，不亦說乎？有朋自遠方來，不亦樂乎？人不知而不慍，不亦君子乎？”
+
+The whole work and achievement of the learner, first perfecting his knowledge, then attracting by his fame like-minded individuals, and finally complete in himself.
+1. The Master said, "Is it not pleasant to learn with a constant perseverance and application?
+2. "Is it not delightful to have friends coming from distant quarters?
+3. "Is he not a man of complete virtue, who feels no discomposure though men may take no note of him?"
+
+achievement [əˈtʃi:vmənt] n.完成；成就
+perfect[ˈpɜ:fɪkt] v.使完善；使完备；使完美
+attract [əˈtrækt]vt.吸引；引起…的好感 
+fame [feɪm] n.名声；名望 
+like-minded [laɪk 'maɪndɪd] adj.志趣相投的 
+individuals [ɪndɪ'vɪdʒʊəlz] n. [口语]人；某种类型的人 
+constant [ˈkɒnstənt] adj. 不断的，持续的，始终如一的 
+perseverance [ˌpɜ:sɪˈvɪərəns]n.毅力；韧性；不屈不挠的精神
+delightful [dɪˈlaɪtfl] adj. 令人高兴的；令人愉快的；宜人的 
+distant [ˈdɪstənt] adj. 遥远的，远离的
+quarter [ˈkwɔ:tə(r)] n. 地区 
+virtue [ˈvɜ:tʃu:] n. 美德；德行；价值 
+discomposure [ˌdɪskəm'pəʊʒə(r)] n. 心乱，不安 
+take note of 注意，留意
+
+
+Chapter 2
+
+　　有子曰：“其爲人也孝弟，而好犯上者，鮮矣。不好犯上，而好作亂者，未之有也。君子務本，本立而道生。孝弟也者，其爲仁之本與！”
+
+Filial piety and fraternal submission are the foundation of all virtuous practice.
+1. The philosopher Yû said, "They are few who, being filial and fraternal, are fond of offending against their superiors. There have been none, who, not liking to offend against their superiors, have been fond of stirring up confusion.
+2. "The superior man bends his attention to what is radical. That being established, all practical courses naturally grow up. Filial piety and fraternal submission! -- are they not the root of all benevolent actions?"
+
+filial [ˈfɪliəl]adj.子女的 
+piety[ˈpaɪəti] n.虔诚，虔敬；孝顺
+fraternal [frəˈtɜ:nl]adj.兄弟的；兄弟般的 
+submission [səbˈmɪʃn] n.服从；谦恭，柔顺 
+virtuous [ˈvɜ:tʃuəs] adj.道德的，有德行的；善良的 
+philosopher [fəˈlɒsəfə(r)] n. 哲学家； 思想家
+offend [əˈfend] vt. 触怒；冒犯 
+superior [su:ˈpɪəriə(r)] n.上级，上司；优胜者 
+stir up [stə: ʌp] 激起；挑起；搅扰 
+bend [bend] vt.（使）弯曲；强行；集中全力于 
+radical [ˈrædɪkl] adj.根本的，基本的；彻底的
+benevolent [bəˈnevələnt] adj.乐善好施的；慈善的
+
+
+Chapter 3
+
+　　子曰：“巧言令色，鮮矣仁。”
+
+Fair appearances are suspicious.
+The Master said, "Fine words and an insinuating appearance are seldom associated with true virtue."
+
+fair [feə(r)] adj. 公平的；晴朗的；美丽的
+appearance [əˈpɪərəns] n. 外貌，外观 
+suspicious [səˈspɪʃəs] adj. 可疑的；怀疑的；不信任的
+insinuating [ɪn'sɪnjʊeɪtɪŋ] adj. 曲意巴结的，暗示的 
+be associated [əˈsəʊʃieɪt] with 和…联系在一起；与…有关
+
+ 
+
+Chapter 4
+
+　　曾子曰：“吾日三省吾身：爲人謀而不忠乎？與朋友交而不信乎？傳不習乎？”
+
+How the philosopher Tsang daily examined himself, to guard against his being guilty of any imposition.
+The philosopher Tsang said, "I daily examine myself on three points:-- whether, in transacting business for others, I may have been not faithful;-- whether, in intercourse with friends, I may have been not sincere;-- whether I may have not mastered and practiced the instructions of my teacher."
+
+philosopher [fəˈlɒsəfə(r)] n.哲学家，哲人；思想家 
+guilty [ˈgɪlti] adj.内疚的；有罪的 
+imposition [ˌɪmpəˈzɪʃn] n.强加；被迫接受；过分的要求 
+transact [trænˈzækt] vt.办理（业务等） 
+faithful [ˈfeɪθfl] adj.忠实的； 忠诚的；正确的 
+intercourse [ˈɪntəkɔ:s] n.交流，交往，交际 
+sincere [sɪnˈsɪə(r)] adj.真诚的，诚挚的；〈古〉纯粹的 
+master [ˈmɑ:stə(r)] vt.精通，熟练
+instruction [ɪnˈstrʌkʃn] n.授课；教诲；传授的或获得的课程
+
+ 
+
+Chapter 5
+
+　　子曰：“道千乘之國，敬事而信，節用而愛人，使民以時。”
+
+Fundamental principles for the government of a large state.
+The Master said, "To rule a country of a thousand chariots, there must be reverent attention to business, and sincerity; economy in expenditure, and love for men; and the employment of the people at the proper seasons."
+
+ 
+
+Chapter 6
+
+　　子曰：“弟子入則孝，出則弟，謹而信，汎愛眾，而親仁。行有餘力，則以學文。”
+
+Rules for the training of the young:-- duty first and then accomplishments.
+The Master said, "A youth, when at home, should be filial, and, abroad, respectful to his elders. He should be earnest and truthful. He should overflow in love to all, and cultivate the friendship of the good. When he has time and opportunity, after the performance of these things, he should employ them in polite studies."
+
+ 
+
+Chapter 7
+
+　　子夏曰：“賢賢易色；事父母，能竭其力；事君，能致其身；與朋友交，言而有信。雖曰未學，吾必謂之學矣。”
+
+Tsze-hsiâ's views of the substance of learning.
+Tsze-hsiâ said, "If a man withdraws his mind from the love of beauty, and applies it as sincerely to the love of the virtuous; if, in serving his parents, he can exert his utmost strength; if, in serving his prince, he can devote his life; if, in his intercourse with his friends, his words are sincere:-- although men say that he has not learned, I will certainly say that he has."
+
+ 
+
+Chapter 8
+
+　　子曰：“君子不重則不威，學則不固，主忠信，無友不如己者，過則勿憚改。”
+
+Principles of self-cultivation.
+1. The Master said, "If the scholar be not grave, he will not call forth any veneration, and his learning will not be solid.
+2. "Hold faithfulness and sincerity as first principles.
+3. "Have no friends not equal to yourself.
+4. "When you have faults, do not fear to abandon them."
+
+ 
+
+Chapter 9
+
+　　曾子曰：“愼終追遠，民德歸厚矣。”
+
+The good effect of attention on the part of superiors to the offices of the dead:-- an admonition of Tsâng Shan.
+The philosopher Tsang said, "Let there be a careful attention to perform the funeral rites to parents, and let them be followed when long gone with the ceremonies of sacrifice;-- then the virtue of the people will resume its proper excellence."
+
+ 
+
+Chapter 10
+
+　　子禽問於子貢曰：“夫子至於是邦也，必聞其政。求之與？抑與之與？”
+
+　　子貢曰：“夫子溫﹑良﹑恭﹑儉﹑讓以得之。夫子之求之也，其諸異乎人之求之與？”
+
+Characteristics of Confucius, and their influence on the princes of the time.
+1. Tsze-ch'in asked Tsze-kung, saying, "When our master comes to any country, he does not fail to learn all about its government. Does he ask his information? or is it given to him?"
+2. Tsze-kung said, "Our master is benign, upright, courteous, temperate, and complaisant and thus he gets his information. The master's mode of asking information! -- is it not different from that of other men?"
+
+ 
+
+Chapter 11
+
+　　子曰：“父在，觀其志。父沒，觀其行。三年無改於父之道，可謂孝矣。”
+
+On filial duty.
+The Master said, "While a man's father is alive, look at the bent of his will; when his father is dead, look at his conduct. If for three years he does not alter from the way of his father, he may be called filial."
+
+ 
+
+Chapter 12
+
+　　有子曰：“禮之用，和爲貴。先王之道，斯爲美。小大由之。有所不行。知和而和，不以禮節之，亦不可行也。”
+
+In ceremonies a natural ease is to be prized, and yet to be subordinate to the end of ceremonies, -- the reverential observance of propriety.
+1. The philosopher Yû said, "In practicing the rules of propriety, a natural ease is to be prized. In the ways prescribed by the ancient kings, this is the excellent quality, and in things small and great we follow them.
+2. "Yet it is not to be observed in all cases. If one, knowing how such ease should be prized, manifests it, without regulating it by the rules of propriety, this likewise is not to be done."
+
+ 
+
+Chapter 13
+
+　　有子曰：“信近於義，言可復也。恭近於禮，遠恥辱也。因不失其親，亦可宗也。”
+
+To save from future repentance, we must be careful in our first steps.
+The philosopher Yû said, "When agreements are made according to what is right, what is spoken can be made good. When respect is shown according to what is proper, one keeps far from shame and disgrace. When the parties upon whom a man leans are proper persons to be intimate with, he can make them his guides and masters."
+
+ 
+
+Chapter 14
+
+　　子曰：“君子食無求，飽；居無求，安；敏於事而愼於言；就有道而正焉：可謂好學也已。”
+
+With what mind one aiming to be a Chun-tsze pursues his learning.
+The Master said, "He who aims to be a man of complete virtue in his food does not seek to gratify his appetite, nor in his dwelling place does he seek the appliances of ease; he is earnest in what he is doing, and careful in his speech; he frequents the company of men of principle that he may be rectified:-- such a person may be said indeed to love to learn."
+
+ 
+
+Chapter 15
+
+　　子貢曰：“貧而無諂，富而無驕，何如？”子曰：“可也；未若貧而樂，富而好禮者也。”
+
+　　子貢曰：“《詩》云：‘如切如磋，如琢如磨。’其斯之謂與？”子曰：“賜也，始可與言《詩》已矣，告諸往而知來者。”
+
+An illustration of the successive steps in self-cultivation.
+1. Tsze-kung said, "What do you pronounce concerning the poor man who yet does not flatter, and the rich man who is not proud?" The Master replied, "They will do; but they are not equal to him, who, though poor, is yet cheerful, and to him, who, though rich, loves the rules of propriety."
+2. Tsze-kung replied, "It is said in the Book of Poetry, 'As you cut and then file, as you carve and then polish.' -- The meaning is the same, I apprehend, as that which you have just expressed."
+3. The Master said, "With one like Ts'ze, I can begin to talk about the odes. I told him one point, and he knew its proper sequence."
+
+ 
+
+Chapter 16
+
+　　子曰：“不患人之不己知，患不知人也。”
+
+Personal attainment should be our chief aim.
+The Master said, "I will not be afflicted at men's not knowing me; I will be afflicted that I do not know men.
+
+ 
+
+（《Confucian Analects》）
