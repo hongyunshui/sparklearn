@@ -1,10 +1,8 @@
 package teamTest.fxx
 
 import java.util.Properties
-
 import org.apache.spark.ml.fpm.FPGrowth
 import org.apache.spark.sql.{SaveMode, SparkSession, _}
-
 /**
   * Created by fanxiaoxia on 2018/11/24.
   */
@@ -19,7 +17,6 @@ object XL_FP_CARDID_STATION_FXX {
       "dbtable" -> tableName)).load()
     oracleDf
   }
-
   def spark_init(APPName: String, local: Boolean): SparkSession = {
     if (local) {
       SparkSession.builder()
