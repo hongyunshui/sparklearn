@@ -1,3 +1,5 @@
+package teamTest
+
 /**
   * Created by hys on 2018-11-22.
   */
@@ -18,15 +20,15 @@ class FPGrowthUsing(){
   def fpGrowthTest() ={
     //设置参数
     //最小支持度
-    val minSupport=0.01
+    val minSupport=0.001
     //最小置信度
-    val minConfidence=0.8
+    val minConfidence=0.5
     //数据分区
     val numPartitions=2
 
     //取出数据
 //    val data = sc.textFile("E:\\files\\LearnFiles\\DataAnalysis\\modelData\\")
-    val data = OracleTools().get_itemSet_RDD()
+    val data = myTools.OracleTools().get_itemSet_RDD("XL_FP_CARDID_STATION", "GROUP_STATION")
     println("*************已经获取初始数据集**************")
 
     //把数据通过空格分割

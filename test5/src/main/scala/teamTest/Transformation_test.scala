@@ -1,3 +1,5 @@
+package teamTest
+
 import org.apache.spark.{SparkConf, SparkContext}
 
 /**
@@ -19,7 +21,7 @@ object Transformation_test{
     tr.map_test()
     println("***********")
     tr.filter_test()
-    println("***********flatMap test**********")
+    println("***********flatMap MYFP**********")
     tr.flatMap_test()
     println("******groupByKey操作*******")
     tr.groupByKey_test()

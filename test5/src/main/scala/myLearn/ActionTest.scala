@@ -1,3 +1,5 @@
+package myLearn
+
 import org.apache.spark.{SparkConf, SparkContext}
 
 /**
@@ -24,7 +26,7 @@ object ActionTest {
     act.countByKey_test()
   }
   val conf = new SparkConf()
-    .setAppName("ActionTest")
+    .setAppName("myLearn.ActionTest")
     .setMaster("local")
   val sc = new SparkContext(conf)
 }

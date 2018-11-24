@@ -1,10 +1,12 @@
+package myLearn
+
 import org.apache.spark.{SparkConf, SparkContext}
 
 /**
   * Created by hys on 2018-11-09.
   */
 object CreateRDDtest{
-  // 定义apply函数，方便以 "val = CreateRDDtest()" 的形式实例化
+  // 定义apply函数，方便以 "val = myLearn.CreateRDDtest()" 的形式实例化
   def apply(): CreateRDDtest = new CreateRDDtest()
   def main(args: Array[String]): Unit = {
     val ct = CreateRDDtest()

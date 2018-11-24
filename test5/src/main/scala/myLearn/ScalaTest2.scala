@@ -1,3 +1,5 @@
+package myLearn
+
 import org.apache.spark.{SparkConf, SparkContext}
 
 /**

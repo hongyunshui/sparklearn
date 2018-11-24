@@ -1,3 +1,5 @@
+package myTools
+
 import org.apache.spark.sql.SparkSession
 /**
   * Created by Administrator on 2018/8/21.
@@ -7,8 +9,7 @@ object OracleTools {
 
   def main(args: Array[String]): Unit = {
     val gt = OracleTools()
-    gt.get_itemSet_RDD()
-//    gt.fpGrowthTest()
+    gt.get_itemSet_RDD("FP_STATION_NAME_LINES", "lineno")
   }
 
   Class.forName("oracle.jdbc.driver.OracleDriver")
@@ -22,19 +23,16 @@ object OracleTools {
     .getOrCreate()
 }
 class OracleTools(){
-  def get_itemSet_RDD() ={
+  def get_itemSet_RDD(tb:String, tbField:String) ={
 
     val jdbcDF = OracleTools.spark.read.format("jdbc").options(Map("url" -> OracleTools.url,
       "user" -> "test",
       "password" -> "test",
-      "dbtable" -> "FP_STATION_NAME_LINES")).load()
+      "dbtable" -> tb)).load()
     jdbcDF.createOrReplaceTempView("table1")
-    OracleTools.spark.sql( " select lineno from table1 ").show(100)
-    val readOracleToRDD = OracleTools.spark.sql( " select lineno from table1 ").rdd
-//    println(readOracleToRDD)
-//    println("************readOracleToRDD*****************")
-//val transactions=readOracleToRDD.map(x=>x.getString(0).split(" "))
-    //    transactions.cache()
+//    val sqlWords:String = " select " + tbField + " from table1 "
+    OracleTools.spark.sql(" select " + tbField + " from table1 ").show(100)
+    val readOracleToRDD = OracleTools.spark.sql(" select " + tbField + " from table1 ").rdd
     readOracleToRDD
   }
 

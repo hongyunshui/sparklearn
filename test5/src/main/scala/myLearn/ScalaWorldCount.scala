@@ -1,3 +1,5 @@
+package myLearn
+
 import org.apache.spark.{SparkConf, SparkContext}
 /**
   * Created by hys on 2018-11-06.
