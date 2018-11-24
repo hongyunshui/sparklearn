@@ -1,4 +1,4 @@
-package teamTest
+package teamTest.smy
 
 import java.util.Properties
 

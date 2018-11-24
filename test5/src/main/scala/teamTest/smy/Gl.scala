@@ -1,4 +1,4 @@
-package teamTest
+package teamTest.smy
 
 import org.apache.spark.ml.fpm.FPGrowth
 import org.apache.spark.sql.SparkSession
@@ -37,7 +37,7 @@ class Gl(){
       ("C O K I E")
     ).map(e => e.split(" "))
     val testData = td.toDF("goods")
-//    val testData = teamTest.Gl( ).getItemSet(spark).map(x => x.getString(0).split(",")).toDF("goods")
+//    val testData = teamTest.smy.Gl( ).getItemSet(spark).map(x => x.getString(0).split(",")).toDF("goods")
 
     val fpg = new FPGrowth()
       .setItemsCol("goods") //指定输入列

@@ -1,4 +1,4 @@
-package teamTest
+package teamTest.fxx
 
 import java.util.Properties
 
