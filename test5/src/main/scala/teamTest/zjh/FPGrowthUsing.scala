@@ -3,7 +3,10 @@ package teamTest.zjh
 /**
   * Created by hys on 2018-11-22.
   */
+import java.util.Properties
+
 import org.apache.spark.mllib.fpm.FPGrowth
+import org.apache.spark.sql.SaveMode
 
 /**
   * Created by Administrator on 2016/10/24.
@@ -28,7 +31,7 @@ class FPGrowthUsing(){
 
     //取出数据
 //    val data = sc.textFile("E:\\files\\LearnFiles\\DataAnalysis\\modelData\\")
-    val data = myTools.OracleTools().get_itemSet_RDD("XL_FP_CARDID_STATION", "GROUP_STATION")
+    val data = myTools.OracleTools().get_itemSet_RDD("FP_CARDID_STATIONS_HYS", "GROUP_STATION")
     println("*************已经获取初始数据集**************")
 
     //把数据通过空格分割
@@ -66,5 +69,12 @@ class FPGrowthUsing(){
 
     //并且所有的规则产生的推荐，后项只有1个，相同的前项产生不同的推荐结果是不同的行
     //不同的规则可能会产生同一个推荐结果，所以样本数据过规则的时候需要去重
+
+    //写入数据库
+//    val connectProperties = new Properties()
+//    connectProperties.put("user", "test")
+//    connectProperties.put("password", "test")
+//    Class.forName("oracle.jdbc.driver.OracleDriver").newInstance()
+//    c.write.mode(SaveMode.Overwrite).jdbc(url,"up_down_cardid1",connectProperties)
   }
 }

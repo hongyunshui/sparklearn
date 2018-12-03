@@ -5,6 +5,7 @@ import java.util.Properties
 import org.apache.spark.sql.SparkSession
 
 /**
+  * 对Oracle数据库进行读写操作
   * Created by hys on 2018-11-24.
   */
 object ReadWriteOracle {

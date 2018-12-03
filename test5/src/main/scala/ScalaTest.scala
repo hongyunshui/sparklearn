@@ -1,5 +1,4 @@
 import myLearn.{OptRDDtest, ScalaTest2, ScalaWorldCount}
-
 /**
   * Created by hys on 2018-11-07.
   */
@@ -22,14 +21,21 @@ object ScalaTest{
     // 词频统计
 //    st.testWordCount()
     // 统计每一行出现的次数，transformation和action原理测试
-    st.ta测试()
+    val shftest = st.test2 _
+    val shf = sayHello _
+    shf("Lpp")
+    val sayHelloFunc=(name:String) => println("Hello" + name)
+    sayHelloFunc("Hys")
+
   }
+  def sayHello(name:String){println("Hello +" + name)}
 }
 class ScalaTest {
   // 调用同一个工程其他类测试
-  def test2(): Unit ={
+  def test2(){
     val t2 =  ScalaTest2() //调用apply方法实例化ScalaTest2类
     t2.tt2()
+
   }
   // 词频统计测试
   def testWordCount(): Unit ={
@@ -39,5 +45,7 @@ class ScalaTest {
   def ta测试(): Unit ={
     val ta = OptRDDtest()
     ta.每行出现的次数()
+    (name:String) => println(name)
   }
 }
+

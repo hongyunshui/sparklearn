@@ -39,7 +39,7 @@ class ActionTest() {
     * 累加集合中的数字
     * reduce 本质就是一个聚合，将多个元素聚合成一个元素
     */
-  def reduceTest(): Unit ={
+  def reduceTest(){
     val numList = Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     // 并行化集合创建RDD
     val numListRDD = ActionTest.sc.parallelize(numList)
@@ -56,7 +56,7 @@ class ActionTest() {
     *   但是一般不建议这么做，因为RDD如果数据量比较打的化，执行性能会比较差，另外还可能发生内存溢出
     *   所以通常建议使用foreach进行操作
     */
-  def collectTest(): Unit ={
+  def collectTest(){
     val numList = Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     // 并行化集合创建RDD
     val numListRDD = ActionTest.sc.parallelize(numList)
@@ -70,19 +70,18 @@ class ActionTest() {
   /**
     * count:统计RDD中元素个数
     */
-  def count_test(): Unit ={
+  def count_test(){
     val numList = Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     // 并行化集合创建RDD
     val numListRDD = ActionTest.sc.parallelize(numList)
     val cont = numListRDD.count()
     println(cont)
-
   }
 
   /**
     *take: 与collect类似，都是从远程集群上获取RDD的数据，collect获取的是所有数据，take是获取钱n个元素
     */
-  def take_test(): Unit ={
+  def take_test(){
     val numList = Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     // 并行化集合创建RDD
     val numListRDD = ActionTest.sc.parallelize(numList)
@@ -95,7 +94,7 @@ class ActionTest() {
     * 只能指定文件夹，也就是目录，实际上会保存为目录中的/dirName/part-0000
     * 同时不能指定已经存在的文件夹
     */
-  def saveAsTexFile_test(): Unit ={
+  def saveAsTexFile_test(){
     val numList = Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     // 并行化集合创建RDD
     val numListRDD = ActionTest.sc.parallelize(numList)
@@ -107,7 +106,7 @@ class ActionTest() {
   /**
     * countByKey: 对每一个元素的Value进行统计
     */
-  def countByKey_test(): Unit ={
+  def countByKey_test(){
     val soreList = Array(("leo", 66),("hys", 88),("george", 99),("jue", 86),("hys",99))
     val soreListRDD = ActionTest.sc.parallelize(soreList)
     val cntValue = soreListRDD.countByKey()
@@ -118,6 +117,6 @@ class ActionTest() {
   /**
     * foreach :遍历RDD中的每一个元素，并对其进行操作
     */
-  def foreach_test(): Unit ={
+  def foreach_test(){
   }
 }
