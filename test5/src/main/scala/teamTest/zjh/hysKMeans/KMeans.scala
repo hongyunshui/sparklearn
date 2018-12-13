@@ -1,5 +1,6 @@
 package teamTest.zjh.hysKMeans
 
+import org.apache.spark.annotation.Experimental
 import org.apache.spark.internal.Logging
 import org.apache.spark.rdd.RDD
 import org.apache.spark.mllib.linalg.Vector
@@ -108,23 +109,25 @@ object KMeans {
     */
   def validateInitMode(){}
 
-  /**kMeans聚类算法，支持并行计算及k-means++的初始化算法
-    * 这是一个迭代算法，样本根据RDD应该被缓存
-    *
-    *
-    * @param k 聚类个数
-    * @param maxIterations 迭代次数
-    * @param runs 并行度
-    * @param initializationMode 初始中心算法
-    * @param initializationSteps 初始步长
-    * @param epsilon 中心距离阈值
-    * @param seed 随机种子
-    */
+
 }
+
+/**kMeans聚类算法，支持并行计算及k-means++的初始化算法
+  * 这是一个迭代算法，样本根据RDD应该被缓存
+  *
+  *
+  * @param k 聚类个数
+  * @param maxIterations 迭代次数
+  * @param runs 并行度
+  * @param initializationMode 初始中心算法
+  * @param initializationSteps 初始步长
+  * @param epsilon 中心距离阈值
+  * @param seed 随机种子
+  */
 class KMeans private(
                       private  var k:Int,
-                      private  var maxIterations:Int,
                       private  var runs:Int,
+                      private  var maxIterations:Int,
                       private  var initializationMode:String,
                       private  var initializationSteps:Int,
                       private  var epsilon:Double,
@@ -163,7 +166,69 @@ class KMeans private(
   /**
     * 设置最大迭代次数，默认：20
     */
-  def setMaxItetations()
-                    ){
+  def setMaxItetations(maxIterations:Int):this.type ={
+    this.maxIterations = maxIterations
+    this
+
+  }
+  /*
+  初始中心算法，支持random 或则k-means++
+   */
+  def getInitalizationMode :String = initializationMode
+
+  /**
+    * 设置初始中心算法，可以选择random模式，选择随机点来初始化中心
+    * 也可以选择k-means++模式，参照：
+    * （Bahmani et al.,Scalable K-Means++,VLDB 2012）。默认：k-means++
+    *
+    */
+  def setInitializationMode(initializationMode:String):this.type = {
+    if (initializationMode !=KMeans.RANDOM && initializationMode !=KMeans.K_MEANS_PARALLEL){
+      throw new IllegalArgumentException("Invalid initialization mode :" + initializationMode)
+    }
+    this.initializationMode = initializationMode
+    this
+  }
+
+  /**
+    * ::Experimental ::
+    * 并行执行的并行算法的数量
+    */
+
+  @Experimental
+  def getRuns:Int = runs
+
+  /**
+    * ::Experimental ::
+    * 设置并行计算的数量，默认：1
+    */
+
+  @Experimental
+  def setRuns(runs:Int) :this.type = {
+    if (runs <=0){
+      throw new IllegalArgumentException("Number of runs must be positive")
+
+    }
+    this.runs = runs
+    this
+
+  }
+
+  /**
+    * 初始化时的初始步长
+    */
+  def getInitializationSteps:Int = initializationSteps
+
+  /**
+    * 设置初始步长，用于k-means++初始化模型，默认：5
+    */
+  def setInitializationSetps(initializationSteps :Int) :this.type  = {
+    if (initializationSteps <=0) {
+      throw new IllegalArgumentException("Number of initialization steps must be positive")
+    }
+    this.initializationSteps = initializationSteps
+    this
+
+  }
 
 }
