@@ -231,4 +231,35 @@ class KMeans private(
 
   }
 
+  /**
+    * 中心距离阈值
+    */
+
+  def  getEpsilon :Double = epsilon
+
+  /**
+    * 设置中心距离阈值
+    * 如果所有的中心移动距离小于这个距离阈值，我们将停止选择迭代运行
+    *
+    */
+  def setEpsilon(epsilon :Double):this.type  = {
+    this.epsilon = epsilon
+    this
+
+  }
+
+  /**
+    * 聚类初始化的随机种子
+    */
+  def getSeed :Long = seed
+
+  /**
+    * 设置聚类初始化的随机种子
+    *
+    */
+  def setSeed (seed:Long):this.type ={
+    this.seed = seed
+    this
+
+  }
 }
