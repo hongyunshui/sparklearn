@@ -8,7 +8,6 @@ import org.apache.spark.{SparkConf, SparkContext}
 object HysTools{
 
 }
-
 class HysTools {
   /**
     * 创建SparkContext对象

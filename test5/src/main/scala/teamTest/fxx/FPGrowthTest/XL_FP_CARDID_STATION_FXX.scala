@@ -1,6 +1,7 @@
-package teamTest.fxx
+package teamTest.fxx.FPGrowthTest
 
 import java.util.Properties
+
 import org.apache.spark.ml.fpm.FPGrowth
 import org.apache.spark.sql.{SaveMode, SparkSession, _}
 /**

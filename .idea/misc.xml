@@ -13,6 +13,7 @@
       <set>
         <option value="$PROJECT_DIR$/../scalaWC/pom.xml" />
         <option value="$PROJECT_DIR$/../scalaWordCount/pom.xml" />
+        <option value="$PROJECT_DIR$/sparklearn_parent/pom.xml" />
         <option value="$PROJECT_DIR$/worldcount/pom.xml" />
         <option value="$PROJECT_DIR$/../test3/pom.xml" />
         <option value="$PROJECT_DIR$/../test5/pom.xml" />

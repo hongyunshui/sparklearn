@@ -1,4 +1,4 @@
-package teamTest.zjh
+package teamTest.zjh.FPGrowthTest
 
 import java.util.Properties
 

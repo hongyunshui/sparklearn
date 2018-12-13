@@ -20,6 +20,7 @@
     <modules>
         <module>../spark-study</module>
         <module>../test5</module>
+        <module>../hysTools</module>
     </modules>
     <!--集中定义依赖的版本号-->
     <properties>

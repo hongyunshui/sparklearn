@@ -22,10 +22,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="hysTools" />
         <module name="test5" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="hysTools" target="1.5" />
       <module name="scalaWC" target="1.5" />
       <module name="scalaWordCount" target="1.6" />
       <module name="spark-study" target="1.5" />

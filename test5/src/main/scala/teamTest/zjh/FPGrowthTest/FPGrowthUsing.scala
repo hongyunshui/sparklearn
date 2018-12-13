@@ -1,12 +1,9 @@
-package teamTest.zjh
+package teamTest.zjh.FPGrowthTest
 
 /**
   * Created by hys on 2018-11-22.
   */
-import java.util.Properties
-
 import org.apache.spark.mllib.fpm.FPGrowth
-import org.apache.spark.sql.SaveMode
 
 /**
   * Created by Administrator on 2016/10/24.
@@ -34,7 +31,7 @@ class FPGrowthUsing(){
     val data = myTools.OracleTools().get_itemSet_RDD("FP_CARDID_STATIONS_HYS", "GROUP_STATION")
     println("*************已经获取初始数据集**************")
 
-    //把数据通过空格分割
+    //把数据通过逗号分割
     val transactions=data.map(x=>x.getString(0).split(","))
     transactions.cache()
     //创建一个FPGrowth的算法实列

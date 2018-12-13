@@ -1,7 +1,6 @@
 package myTools
 
 import org.apache.spark.sql.SparkSession
-
 /**
   * Created by Administrator on 2018/8/21.
   */
@@ -23,7 +22,6 @@ object OracleTools {
     .master("local[*]")
     .getOrCreate()
 }
-
 class OracleTools(){
   def get_itemSet_RDD(tb:String, tbField:String) ={
 
