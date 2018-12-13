@@ -1,4 +1,6 @@
 import myLearn.{OptRDDtest, ScalaTest2, ScalaWorldCount}
+
+import scala.util.Random
 /**
   * Created by hys on 2018-11-07.
   */
@@ -44,6 +46,8 @@ object ScalaTest{
     shf("Lpp")
     val sayHelloFunc=(name:String) => println("Hello" + name)
     sayHelloFunc("Hys")
+    val r = new Random
+    println(r.nextLong())
 
   }
   def sayHello(name:String){println("Hello +" + name)}

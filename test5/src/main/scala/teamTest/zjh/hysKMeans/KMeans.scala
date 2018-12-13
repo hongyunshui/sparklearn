@@ -4,6 +4,7 @@ import org.apache.spark.annotation.Experimental
 import org.apache.spark.internal.Logging
 import org.apache.spark.rdd.RDD
 import org.apache.spark.mllib.linalg.Vector
+import scala.util.Random
 
 /**
   * Created by hys on 2018-12-08.
@@ -30,6 +31,12 @@ object KMeans {
             runs:Int,
             initializationMode:String,
             seed:Long):KMeansModel = {
+    new KMeans().setK(k)
+      .setMaxItetations(maxIterations)
+      .setRuns(runs)
+      .setInitializationMode(initializationMode)
+      .setSeed(seed)
+//      .runs(data)
     //TODO
   new KMeansModel
   }
@@ -50,6 +57,11 @@ object KMeans {
             runs:Int,
             initializationMode:String
            ):KMeansModel = {
+    new KMeans()
+      .setMaxItetations(maxIterations)
+      .setRuns(runs)
+      .setInitializationMode(initializationMode)
+//      .setSeed(seed)
     //TODO
     new KMeansModel
   }
@@ -84,30 +96,36 @@ object KMeans {
             runs:Int
            ):KMeansModel = {
     train(data, k, maxIterations, runs,K_MEANS_PARALLEL)
-    //TODO
-    new KMeansModel
   }
 
   /**
     * findCloses静态方法，找到当前点距离最近的聚类中心。返回结果是一个元祖(Int, Doublt)。其中Int表示的是聚类
     * 中心点的索引，Doublt表示的是距离。
     */
-  def findCloses(){}
+  def findCloses(): Unit ={
+    println("***************findCloses***************")
+  }
 
   /**
     * 内部调用了findClosest方法，返回的是findClosest方法元祖的第二个值，表示的是cost距离。
     */
-  def pointClosest(){}
+  def pointClosest(): Unit ={
+    println("***************findClosest***************")
+  }
 
   /**
     * 调用了MLUtils类的工具方法fastSquareDistance来快速的计算距离。
     */
-  def fastSquaredDistance(){}
+  def fastSquaredDistance(): Unit ={
+    println("******************fastSquaredDistance********************")
+  }
 
   /**
     * 检查初始化中心点的模式，是random模式还是Kmeans++模式。
     */
-  def validateInitMode(){}
+  def validateInitMode(): Unit ={
+    println("*******************validateInitMode************************")
+  }
 
 
 }
@@ -141,7 +159,7 @@ class KMeans private(
     * @return
     */
 
-  def this() = this(2,20,1,KMeans.K_MEANS_PARALLEL,5,1e-4,Utils.random.nextLong())
+  def this() = this(2,20,1,KMeans.K_MEANS_PARALLEL,5,1e-4,( new Random).nextLong())
 
   /**
     * 聚类个数
@@ -155,7 +173,6 @@ class KMeans private(
   def setK(k:Int):this.type = {
     this.k = k
     this
-
   }
 
   /**
@@ -170,7 +187,6 @@ class KMeans private(
   def setMaxItetations(maxIterations:Int):this.type ={
     this.maxIterations = maxIterations
     this
-
   }
   /*
   初始中心算法，支持random 或则k-means++
@@ -208,7 +224,6 @@ class KMeans private(
   def setRuns(runs:Int) :this.type = {
     if (runs <=0){
       throw new IllegalArgumentException("Number of runs must be positive")
-
     }
     this.runs = runs
     this
