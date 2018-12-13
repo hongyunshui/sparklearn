@@ -1,5 +1,6 @@
 package teamTest.zjh.hysKMeans
 
+import org.apache.spark.internal.Logging
 import org.apache.spark.rdd.RDD
 import org.apache.spark.mllib.linalg.Vector
 
@@ -107,7 +108,62 @@ object KMeans {
     */
   def validateInitMode(){}
 
+  /**kMeans聚类算法，支持并行计算及k-means++的初始化算法
+    * 这是一个迭代算法，样本根据RDD应该被缓存
+    *
+    *
+    * @param k 聚类个数
+    * @param maxIterations 迭代次数
+    * @param runs 并行度
+    * @param initializationMode 初始中心算法
+    * @param initializationSteps 初始步长
+    * @param epsilon 中心距离阈值
+    * @param seed 随机种子
+    */
 }
-class KMeans private(){
+class KMeans private(
+                      private  var k:Int,
+                      private  var maxIterations:Int,
+                      private  var runs:Int,
+                      private  var initializationMode:String,
+                      private  var initializationSteps:Int,
+                      private  var epsilon:Double,
+                      private  var seed:Long
+                    )extends Serializable with Logging{
+
+  /**
+    * 构建KMeans 实例的默认参数：{k:2,maxIterations:20,runs:1,
+    * initializationMode:"k-means||",initializationSteps:5,epsilon:1e-4,seed:random}
+    * @return
+    */
+
+  def this() = this(2,20,1,KMeans.K_MEANS_PARALLEL,5,1e-4,Utils.random.nextLong())
+
+  /**
+    * 聚类个数
+    * @return
+    */
+  def getK :Int = k
+
+  /**
+    * 设置聚类个数，默认：2
+    */
+  def setK(k:Int):this.type = {
+    this.k = k
+    this
+
+  }
+
+  /**
+    * 最大的迭代次数
+    *
+    */
+  def getMaxIterations:Int = maxIterations
+
+  /**
+    * 设置最大迭代次数，默认：20
+    */
+  def setMaxItetations()
+                    ){
 
 }
