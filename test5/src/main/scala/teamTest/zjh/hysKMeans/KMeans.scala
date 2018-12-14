@@ -40,7 +40,7 @@ object KMeans {
       .setRuns(runs)
       .setInitializationMode(initializationMode)
       .setSeed(seed)
-//      .runs(data)
+      .run(data)
     //TODO
   new KMeansModel
   }
@@ -65,7 +65,7 @@ object KMeans {
       .setMaxItetations(maxIterations)
       .setRuns(runs)
       .setInitializationMode(initializationMode)
-//      .setSeed(seed)
+      .run(data)
     //TODO
     new KMeansModel
   }
@@ -103,17 +103,9 @@ object KMeans {
   }
 
   /**
-    * findCloses静态方法，找到当前点距离最近的聚类中心。返回结果是一个元祖(Int, Doublt)。其中Int表示的是聚类
-    * 中心点的索引，Doublt表示的是距离。
+    * 找到点与所有聚类中心最近的一个中心
     */
-  def findCloses(): Unit ={
-    println("***************findCloses***************")
-  }
-
-  /**
-    * 内部调用了findClosest方法，返回的是findClosest方法元祖的第二个值，表示的是cost距离。
-    */
-  def pointClosest(): Unit ={
+  private[mllib] def findtClosest(){
     println("***************findClosest***************")
   }
 
