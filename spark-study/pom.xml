@@ -13,13 +13,7 @@
     <artifactId>spark-study</artifactId>
     <packaging>pom</packaging>
 
-    <!--集中定义依赖的版本号-->
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spark.version>2.2.1</spark.version>
-        <scala.version>2.11</scala.version>
-    </properties>
-
+  s
     <!--依赖关系-->
     <dependencies>
         <!--依赖设置-->

@@ -41,7 +41,6 @@ object KMeans {
       .setInitializationMode(initializationMode)
       .setSeed(seed)
       .run(data)
-    //TODO
   new KMeansModel
   }
 
@@ -66,7 +65,6 @@ object KMeans {
       .setRuns(runs)
       .setInitializationMode(initializationMode)
       .run(data)
-    //TODO
     new KMeansModel
   }
 
@@ -105,12 +103,13 @@ object KMeans {
   /**
     * 找到点与所有聚类中心最近的一个中心
     */
-  private[mllib] def findtClosest(){
-    println("***************findClosest***************")
-  }
+//  private[mllib] def findtClosest(centers:TraversableOnce[VectorWithNorm],
+//                                  point:VectorWithNorm):(Int, Double) = {
+//    (1,2.0) // TODO
+//  }
 
   /**
-    * 调用了MLUtils类的工具方法fastSquareDistance来快速的计算距离。
+    * 调用了MLUtils类的工具方法fastSquareDistance来快速的计算距离
     */
   def fastSquaredDistance(): Unit ={
     println("******************fastSquaredDistance********************")
@@ -297,102 +296,101 @@ class KMeans private(
 
   /**
     * 初始化，随机选择中心点
-    * @param data 数据集
     * @return
     */
- private def initRandom(data:RDD[VectorWithNorm]):Array[Array[VectorWithNorm]] = {
-   // 从数据样本中，随机抽取数据作为中心点，runs是并行度，k是聚类中心数
-//   val sample = data.takeSample(true,runs * k , new XORShiftRandom(this.seed).nextLong()).toSeq
-   // takeSample 是数据采样算子
-   val sample = data.takeSample(true, runs * k, new Random(this.seed).nextLong()).toSeq // 自行修改后的代码
-   // tabulate[T](n:Int)(f:(Int)=>T):Array[T] 返回包含一个给定的函数的值朝贡从0开始的范围内的整数值的数组
-   Array.tabulate(runs)(r => sample.slice(r * k,(r+1) * k).map { v =>
-     new VectorWithNorm(Vectors.dense(v.vector.toArray),v.norm) // 返回（中心向量，中心向量L2范数）
-   }.toArray)
- }
+// private def initRandom(data:RDD[VectorWithNorm]):Array[Array[VectorWithNorm]] = {
+//   // 从数据样本中，随机抽取数据作为中心点，runs是并行度，k是聚类中心数
+////   val sample = data.takeSample(true,runs * k , new XORShiftRandom(this.seed).nextLong()).toSeq
+//   // takeSample 是数据采样算子
+//   val sample = data.takeSample(true, runs * k, new Random(this.seed).nextLong()).toSeq // 自行修改后的代码
+//   // tabulate[T](n:Int)(f:(Int)=>T):Array[T] 返回包含一个给定的函数的值朝贡从0开始的范围内的整数值的数组
+//   Array.tabulate(runs)(r => sample.slice(r * k,(r+1) * k).map { v =>
+//     new VectorWithNorm(Vectors.dense(v.vector.toArray),v.norm) // 返回（中心向量，中心向量L2范数）
+//   }.toArray)
+// }
 
   /**
     * 初始化样本中心点，采用k-means++算法
-    * @param data 数据集
     * @return
     */
-  private def initKMeansParallel(data: RDD[VectorWithNorm]):Array[Array[VectorWithNorm]] = {
-    // 初始化中心costs
-    val centers = Array.tabulate(runs)(r => ArrayBuffer.empty[VectorWithNorm])
-    val costs = data.map(_ => Vectors.dense(Array.fill(runs)(Double.PositiveInfinity))).cache()
-    // 初始化第一个中心点
-//    val seed = new XORShiftRandom(this.seed).nextInt()
-    val seed = new Random(this.seed).nextInt() // 自行修改的代码
-    val sample = data.takeSample(true, runs, seed).toSeq
-    val newCenters = Array.tabulate(runs)(r => ArrayBuffer(sample(r).toDense))
+//  private def initKMeansParallel(data: RDD[VectorWithNorm]):Array[Array[VectorWithNorm]] = {
+//    // 初始化中心costs
+//    val centers = Array.tabulate(runs)(r => ArrayBuffer.empty[VectorWithNorm])
+//    val costs = data.map(_ => Vectors.dense(Array.fill(runs)(Double.PositiveInfinity))).cache()
+//    // 初始化第一个中心点
+////    val seed = new XORShiftRandom(this.seed).nextInt()
+//    val seed = new Random(this.seed).nextInt() // 自行修改的代码
+//    val sample = data.takeSample(true, runs, seed).toSeq
+//    val newCenters = Array.tabulate(runs)(r => ArrayBuffer(sample(r).toDense))
+//
+//    /**合并新的中心到中心到中心*/
+//    def mergeNewCenters():Unit = {
+//      var r = 0
+//      while(r < runs){
+//        centers(r) ++= newCenters(r)
+//        newCenters(r).clear()
+//        r += 1
+//      }
+//    }
+//    // 在每次迭代中，抽样2* k个样本进行计算
+//    // 注意：每次迭代中计算样本点与中心点之间的距离
+//    var step = 0
+//    while (step < initializationSteps){
+//      val bcNewCenters = data.context.broadcast(newCenters) // 新中心点
+//      val preCosts = costs // 前costs
+//      // costs 计算
+//      costs = data.zip(preCosts).map { case (point, cost) =>
+//      Vectors.dense(
+//        Array.tabulate(runs){ r =>
+//        math.min(KMeans.pointClosest(bcNewCenters,value(r),point), cost(r))
+//        }
+//      )}.cache()
+//      val sumCosts = costs
+//        .aggregate(Vectors.zeros(runs))(
+//          seqop = (s, v) =>{
+//            // s +=v
+//            axpy(1.0, v, s)
+//            s
+//          },
+//          combop = (s0, s1) => {
+//            // s0 += s1
+//            axpy(1.0, s1, s0)
+//            s0
+//          }
+//        )
+//      preCosts.unpersist(blocking = false)
+//      // 选择中心点
+//      val chosen = data.zip(costs).mapPartitionsWithIndex{ (index, pointsWithCosts) =>
+//      val rand = new XORShiftRandom(seed ^ (step << 16) ^ index)
+//      pointsWithCosts.flatMap{case(p, c) =>
+//      val rs = (0 until runs).filter{ r =>
+//      rand.nextDouble() < 2.0 * c(r) * k / sumCosts(r)
+//      }
+//      if (rs.length > 0 ) Some(p, rs) else None
+//      }
+//      }.collect()
+//      mergeNewCenters()
+//      chosen.foreach{ case (p, rs) =>
+//      rs.foreach(newCenters(_) += p.toDense)
+//      }
+//      step += 1
+//    }
+//    mergeNewCenters()
+//    costs.unpersist(blocking = false)
+//    // 最后，可能会有超过k个的候选中心点，通过候选中心点对应的样本并且运行本地k-means++来选择k个中心点
+//    val bcCenters = data.context.broadcast(centers)
+//    val weightMap = data.flatMap{p =>
+//    Iterator.tabulate(runs) { r =>
+//      ((r, KMeans.findCloses(bcCenters.value(r), p)._1), 1.0)
+//    }
+//    }.reduceByKey(_ + _).collectAsMap()
+//    val finalCenters = (0 until runs).par.map{ r =>
+//    val myCenters = centers(r).toArray
+//    val myWeights = (0 until myCenters.length).map(i => weightMap.getOrElse((r, i),
+//      0.0)).toArray
+//    LocalKMeans.KMeansPlusPlus(r, myWeights, k, 30)
+//    }
+//    finalCenters.toArray
+//  }
 
-    /**合并新的中心到中心到中心*/
-    def mergeNewCenters():Unit = {
-      var r = 0
-      while(r < runs){
-        centers(r) ++= newCenters(r)
-        newCenters(r).clear()
-        r += 1
-      }
-    }
-    // 在每次迭代中，抽样2* k个样本进行计算
-    // 注意：每次迭代中计算样本点与中心点之间的距离
-    var step = 0
-    while (step < initializationSteps){
-      val bcNewCenters = data.context.broadcast(newCenters) // 新中心点
-      val preCosts = costs // 前costs
-      // costs 计算
-      costs = data.zip(preCosts).map { case (point, cost) =>
-      Vectors.dense(
-        Array.tabulate(runs){ r =>
-        math.min(KMeans.pointClosest(bcNewCenters,value(r),point), cost(r))
-        }
-      )}.cache()
-      val sumCosts = costs
-        .aggregate(Vectors.zeros(runs))(
-          seqop = (s, v) =>{
-            // s +=v
-            axpy(1.0, v, s)
-            s
-          },
-          combop = (s0, s1) => {
-            // s0 += s1
-            axpy(1.0, s1, s0)
-            s0
-          }
-        )
-      preCosts.unpersist(blocking = false)
-      // 选择中心点
-      val chosen = data.zip(costs).mapPartitionsWithIndex{ (index, pointsWithCosts) =>
-      val rand = new XORShiftRandom(seed ^ (step << 16) ^ index)
-      pointsWithCosts.flatMap{case(p, c) =>
-      val rs = (0 until runs).filter{ r =>
-      rand.nextDouble() < 2.0 * c(r) * k / sumCosts(r)
-      }
-      if (rs.length > 0 ) Some(p, rs) else None
-      }
-      }.collect()
-      mergeNewCenters()
-      chosen.foreach{ case (p, rs) =>
-      rs.foreach(newCenters(_) += p.toDense)
-      }
-      step += 1
-    }
-    mergeNewCenters()
-    costs.unpersist(blocking = false)
-    // 最后，可能会有超过k个的候选中心点，通过候选中心点对应的样本并且运行本地k-means++来选择k个中心点
-    val bcCenters = data.context.broadcast(centers)
-    val weightMap = data.flatMap{p =>
-    Iterator.tabulate(runs) { r =>
-      ((r, KMeans.findCloses(bcCenters.value(r), p)._1), 1.0)
-    }
-    }.reduceByKey(_ + _).collectAsMap()
-    val finalCenters = (0 until runs).par.map{ r =>
-    val myCenters = centers(r).toArray
-    val myWeights = (0 until myCenters.length).map(i => weightMap.getOrElse((r, i),
-      0.0)).toArray
-    LocalKMeans.KMeansPlusPlus(r, myWeights, k, 30)
-    }
-    finalCenters.toArray
-  }
 }
